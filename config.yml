@@ -1,0 +1,81 @@
+---
+
+# If you need to run multiple instances of Drupal VM, set a unique hostname,
+# machine name, and IP address for each instance.
+vagrant_hostname: cobredia.local
+vagrant_machine_name: cobredia
+
+# Set 'build_makefile' to 'false' and this to 'true' if you are using a
+# composer based site deployment strategy.
+build_composer: true
+drupal_composer_path: "{{ config_dir }}/composer.json"
+drupal_composer_install_dir: "/var/www/drupalvm"
+drupal_composer_dependencies: []
+
+# Set this to 'true' and 'build_makefile', 'build_composer' to 'false' if you
+# are using Composer's create-project as a site deployment strategy.
+build_composer_project: false
+drupal_composer_project_package: "drupal-composer/drupal-project:8.x-dev"
+drupal_composer_project_options: "--prefer-dist --stability dev --no-interaction -o"
+
+# Settings for installing a Drupal site if 'install_site:' is 'true'.
+drupal_major_version: 8
+drupal_domain: "{{ vagrant_hostname }}"
+drupal_site_name: Drupal
+drupal_enable_modules: []
+drupal_account_name: admin
+drupal_account_pass: admin
+
+# Cron jobs are added to the vagrant user's crontab. Keys include name
+# (required), minute, hour, day, weekday, month, job (required), and state.
+drupalvm_cron_jobs:
+ - {
+   name: "Drupal Cron",
+   minute: "*/30",
+   job: "drush -r {{ drupal_core_path }} core-cron"
+ }
+
+# Comment out any extra utilities you don't want to install. If you don't want
+# to install *any* extras, make set this value to an empty set, e.g. `[]`.
+installed_extras:
+  - adminer
+  - blackfire
+  # - drupalconsole
+  # - elasticsearch
+  # - java
+  - mailhog
+  # - memcached
+  # - newrelic
+  - nodejs
+  - pimpmylog
+  # - redis
+  # - ruby
+  # - selenium
+  #- solr
+  - varnish
+  - xdebug
+  # - xhprof
+
+drush_version: "8.x"
+drush_keep_updated: true
+drush_composer_cli_options: "--prefer-dist --no-interaction -o --no-dev"
+
+# PHP Configuration. Currently-supported versions: 5.6, 7.0.
+# To use 5.6, see: http://docs.drupalvm.com/en/latest/other/php-56/
+php_date.timezone: "America/Chicago"
+php_upload_max_filesize: "50M"
+php_post_max_size: "50M"
+php_output_buffering: "Off"
+
+# Run specified scripts before or after VM is provisioned. Path is relative to
+# the `provisioning/playbook.yml` file.
+pre_provision_scripts: []
+#post_provision_scripts:
+#  - "{{ config_dir }}/scripts/drupalvm/post-provision.sh"
+
+# MySQL Configuration.
+mysql_max_allowed_packet: 512M
+
+# Node.js configuration (if enabled above).
+# Valid examples: "0.10", "0.12", "4.x", "5.x".
+nodejs_version: "4.x"
