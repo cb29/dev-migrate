@@ -1,0 +1,44 @@
+# Migration configuration for imported datas_google_analytics.
+id: google_analytics_datas
+label: Import datas from Google Analytics API
+migration_group: API Imports
+# Dependencies
+dependencies:
+  module:
+    - imports_analytic_git
+# Source settings
+source:
+  # Define the custom source
+  plugin: source_google_analytics
+  # Choose the database
+  key: workspace
+  # Enable "track changes" feature.
+  track_changes: true
+  # Constants
+  constants:
+    date_now: !php/const:date('Ymd')
+  # Unique keys
+  keys:
+    - date_now
+    - company_id
+# Destination
+destination:
+  plugin: entity:node
+# Mapping
+process:
+  # Entity type
+  type:
+    plugin: default_value
+    default_value: datas
+  # Targets
+  title: title
+  field_related_company:
+    plugin: entity_lookup
+    source: company_id
+    value_key: field_id_company
+    entity_type: node
+    bundle_key: vid
+    bundle: company
+  field_datas_google_analytics: datas_google_analytics
+# Migration dependencies
+migration_dependencies: {}

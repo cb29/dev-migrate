@@ -1,0 +1,11 @@
+type: module
+name: Imports Analytic Git
+description: 'Import datas ....'
+package: Migration
+core: 8.x
+dependencies:
+  - migrate_plus
+  - migrate_tools
+config_devel:
+  install:
+    - migrate_plus.migration.companies

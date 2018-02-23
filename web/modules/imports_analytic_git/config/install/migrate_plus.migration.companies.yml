@@ -1,0 +1,32 @@
+# Migration configuration for imported companies.
+id: companies
+label: Import datas...
+migration_group: Drupal Imports
+# Dependencies
+dependencies:
+  module:
+    - imports_analytic_git
+# Source settings
+source:
+  # Define the custom source
+  plugin: source_companies
+  # Choose the database
+  key: workspace
+  # Enable "track changes" feature.
+  track_changes: true
+# Destination
+destination:
+  plugin: entity:node
+# Mapping
+process:
+  # Entity type
+  type:
+    plugin: default_value
+    default_value: company
+  # Targets
+  title: title
+  field_title_full: title_full
+  field_id_company: id_company
+  field_id_google_analytics_profil: id_google_analytics_profile
+# Migration dependencies
+migration_dependencies: {}

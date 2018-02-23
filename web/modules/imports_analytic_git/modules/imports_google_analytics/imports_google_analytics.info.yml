@@ -1,0 +1,12 @@
+type: module
+name: Imports Google Analytics
+description: 'Import datas from Google Analytics API.'
+package: Migration
+core: 8.x
+dependencies:
+  - migrate_plus
+  - migrate_tools
+  - imports_analytic_git
+config_devel:
+  install:
+    - migrate_plus.migration.google_analytics_datas
